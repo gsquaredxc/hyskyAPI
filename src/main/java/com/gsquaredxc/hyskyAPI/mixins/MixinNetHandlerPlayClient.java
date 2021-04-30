@@ -6,9 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C01PacketChatMessage;
-import net.minecraft.network.play.server.S01PacketJoinGame;
-import net.minecraft.network.play.server.S38PacketPlayerListItem;
-import net.minecraft.network.play.server.S3FPacketCustomPayload;
+import net.minecraft.network.play.server.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,7 +41,6 @@ public class MixinNetHandlerPlayClient {
     //Called extremely rarely
     @Inject(method = "handleJoinGame", at = @At("TAIL"))
     private void onJoinGame(final S01PacketJoinGame packet, final CallbackInfo ci){
-        System.out.println("Joined!");
         if (JoinGameInListenerO.isActive()) {
             JoinGameInListenerO.eventHappens(new JoinGameInEvent(packet));
         }
@@ -70,6 +67,22 @@ public class MixinNetHandlerPlayClient {
                     PlayerListUpdateInListenerO.eventHappens(new PlayerListUpdateEvent(packetIn, addplayerdata.getProfile().getId(), addplayerdata.getDisplayName()));
                 }
             }
+        }
+    }
+
+    //Called fairly often
+    @Inject(method = "handleTeams", at = @At("TAIL"))
+    private void onTeamPacket(final S3EPacketTeams packet, final CallbackInfo ci){
+        if (ScoreboardTeamInListenerO.isActive() && packet.getPrefix() != null && packet.getSuffix() != null && packet.getName() != null) {
+            ScoreboardTeamInListenerO.eventHappens(new ScoreboardTeamInEvent(packet, packet.getPrefix() + packet.getSuffix(), packet.getName()));
+        }
+    }
+
+    //Called sometimes
+    @Inject(method = "handleScoreboardObjective", at = @At("TAIL"))
+    private void onScoreboardTitle(final S3BPacketScoreboardObjective packet, final CallbackInfo ci){
+        if (ScoreboardObjectiveInListenerO.isActive() && packet.func_149337_d() != null && packet.func_149339_c() != null) {
+            ScoreboardObjectiveInListenerO.eventHappens(new ScoreboardObjectiveInEvent(packet,packet.func_149337_d(),packet.func_149339_c()));
         }
     }
 }

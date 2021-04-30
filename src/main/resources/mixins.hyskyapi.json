@@ -3,8 +3,7 @@
   "package": "com.gsquaredxc.hyskyAPI.mixins",
   "refmap": "mixins.hyskyapi.refmap.json",
   "mixins": [
-    "MixinNetHandlerPlayClient",
-    "MixinNetworkManager"
+    "MixinNetHandlerPlayClient"
   ],
   "verbose": true
 }
