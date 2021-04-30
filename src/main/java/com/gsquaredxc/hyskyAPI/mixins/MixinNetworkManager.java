@@ -15,15 +15,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(NetworkManager.class)
 public class MixinNetworkManager {
     @Inject(method = "channelRead0",at = @At(value = "INVOKE", target = "Lnet/minecraft/network/Packet;processPacket(Lnet/minecraft/network/INetHandler;)V"), cancellable = true)
-    public void packetHandler(ChannelHandlerContext trash, Packet<?> packet, CallbackInfo ci){
+    public void packetHandler(final ChannelHandlerContext trash, final Packet<?> packet, final CallbackInfo ci){
         if (packet.getClass() == S3BPacketScoreboardObjective.class){
             //not really that useful imo
-            S3BPacketScoreboardObjective s3BPacket = (S3BPacketScoreboardObjective) packet;
+            final S3BPacketScoreboardObjective s3BPacket = (S3BPacketScoreboardObjective) packet;
             if (s3BPacket.func_149337_d() != null && s3BPacket.func_149339_c() != null) {
                 PrivateListeners.ScoreboardObjectiveInListenerO.eventHappens(new ScoreboardObjectiveInEvent(s3BPacket,s3BPacket.func_149337_d(),s3BPacket.func_149339_c()));
             }
         } else if (packet.getClass() == S3EPacketTeams.class) {
-            S3EPacketTeams s3EPacketTeams = (S3EPacketTeams) packet;
+            final S3EPacketTeams s3EPacketTeams = (S3EPacketTeams) packet;
             //System.out.println(s3EPacketTeams.getPrefix() + s3EPacketTeams.getSuffix()+"-:-"+ s3EPacketTeams.getName());
             if (s3EPacketTeams.getPrefix() != null && s3EPacketTeams.getSuffix() != null && s3EPacketTeams.getName() != null) {
                 //System.out.println(s3EPacketTeams.getDisplayName());
@@ -31,10 +31,10 @@ public class MixinNetworkManager {
             }
         }else if (packet.getClass() == S3CPacketUpdateScore.class){
             //also useless apparently
-            S3CPacketUpdateScore s3CPacketUpdateScore = (S3CPacketUpdateScore)packet;
+            final S3CPacketUpdateScore s3CPacketUpdateScore = (S3CPacketUpdateScore)packet;
            // System.out.println(s3CPacketUpdateScore.getObjectiveName() +"-:-"+s3CPacketUpdateScore.getPlayerName()+"-:-"+s3CPacketUpdateScore.getScoreAction()+"-:-"+s3CPacketUpdateScore.getScoreValue());
         } else if (packet.getClass() == S3DPacketDisplayScoreboard.class){
-            S3DPacketDisplayScoreboard s3DPacketDisplayScoreboard = (S3DPacketDisplayScoreboard) packet;
+            final S3DPacketDisplayScoreboard s3DPacketDisplayScoreboard = (S3DPacketDisplayScoreboard) packet;
             //System.out.println(s3DPacketDisplayScoreboard.func_149370_d() + "-:-" + s3DPacketDisplayScoreboard.func_149371_c());
         }
     }

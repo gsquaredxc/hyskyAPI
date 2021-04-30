@@ -7,11 +7,11 @@ public class ActiveChatListeners {
 
     private final ArrayList<EventChatListener> activeListners = new ArrayList<>();
 
-    public void addToChatListeners(EventChatListener e){
+    public void addToChatListeners(final EventChatListener e){
         activeListners.add(e);
     }
 
-    public void removeFromChatListeners(EventChatListener e) {
+    public void removeFromChatListeners(final EventChatListener e) {
         activeListners.remove(e);
     }
 

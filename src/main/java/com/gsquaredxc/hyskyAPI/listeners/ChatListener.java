@@ -14,21 +14,21 @@ public class ChatListener {
     public static Minecraft mc = Minecraft.getMinecraft();
 
     @SubscribeEvent(receiveCanceled = true, priority = EventPriority.HIGHEST)
-    public void onChat(ClientChatReceivedEvent event) {
-        String formattedText = event.message.getFormattedText();
+    public void onChat(final ClientChatReceivedEvent event) {
+        final String formattedText = event.message.getFormattedText();
         /* Chat messages */
         if (event.type == 0) {
             System.out.println(formattedText);
-            for (EventChatListener listener : ActiveChatListeners.self.getActiveListners()) {
+            for (final EventChatListener listener : ActiveChatListeners.self.getActiveListners()) {
                 try {
-                    Matcher matcher = listener.getPatternToMatch().matcher(formattedText);
+                    final Matcher matcher = listener.getPatternToMatch().matcher(formattedText);
                     if (matcher.find()) {
                         if (listener.eventHappens(listener.generateEvent(event.message, matcher))) {
                             event.setCanceled(true);
                             return;
                         }
                     }
-                } catch (NoSuchFieldException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e){
+                } catch (final NoSuchFieldException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e){
                     e.printStackTrace();
                 }
             }

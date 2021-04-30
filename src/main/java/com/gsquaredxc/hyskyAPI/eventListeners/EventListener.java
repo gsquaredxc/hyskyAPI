@@ -12,16 +12,16 @@ public class EventListener implements java.util.EventListener {
     protected HashMap<String,EventCallback> inactiveListeners = new HashMap<>();
     protected Class<? extends Event> event;
 
-    public EventListener(Class<? extends Event> e){
+    public EventListener(final Class<? extends Event> e){
         event = e;
     }
 
-    public void register(EventCallback call){
+    public void register(final EventCallback call){
         active = true;
         activeListeners.put(call.name,call);
     }
 
-    public void reregister(String name){
+    public void reregister(final String name){
         if (!inactiveListeners.containsKey(name)) {
             return;
         }
@@ -30,7 +30,7 @@ public class EventListener implements java.util.EventListener {
         active = true;
     }
 
-    public void safeRegister(EventCallback call){
+    public void safeRegister(final EventCallback call){
         if (inactiveListeners.containsKey(call.name)){
             reregister(call.name);
         } else {
@@ -38,7 +38,7 @@ public class EventListener implements java.util.EventListener {
         }
     }
 
-    public void deregister(String name){
+    public void deregister(final String name){
         if (!activeListeners.containsKey(name)) {
             return;
         }
@@ -55,15 +55,15 @@ public class EventListener implements java.util.EventListener {
         active = false;
     }
 
-    public void deleteCallback(String name){
+    public void deleteCallback(final String name){
         activeListeners.remove(name);
         if (activeListeners.isEmpty()){
             active = false;
         }
     }
 
-    public void eventHappens (Event e){
-        for (EventCallback listener: activeListeners.values()){
+    public void eventHappens (final Event e){
+        for (final EventCallback listener: activeListeners.values()){
             listener.callBackToFunction(e);
         }
     }

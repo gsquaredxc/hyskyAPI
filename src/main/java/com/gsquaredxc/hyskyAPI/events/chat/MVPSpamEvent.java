@@ -9,7 +9,7 @@ public class MVPSpamEvent extends EventChat {
     public static Pattern patternToMatch = Pattern.compile("^§r§b\\[MVP§.\\+§b] (?<name>.*?)§f §6joined the lobby!§r$");
     String username;
 
-    public MVPSpamEvent(IChatComponent message, String username){
+    public MVPSpamEvent(final IChatComponent message, final String username){
         super(message);
         this.username = username;
     }
@@ -22,7 +22,7 @@ public class MVPSpamEvent extends EventChat {
                 '}';
     }
 
-    public static MVPSpamEvent generateEvent(IChatComponent message, Matcher matcher){
+    public static MVPSpamEvent generateEvent(final IChatComponent message, final Matcher matcher){
         return new MVPSpamEvent(message, matcher.group(1));
     }
 }

@@ -9,11 +9,11 @@ public class HypeLimitEvent extends EventChat {
 
     public static Pattern patternToMatch = Pattern.compile("^§r  §r§f§l➤ §r§6You have reached your Hype limit! Add Hype to Prototype Lobby minigames by right-clicking with the Hype Diamond!§r$");
 
-    public static HypeLimitEvent generateEvent(IChatComponent message, Matcher matcher){
+    public static HypeLimitEvent generateEvent(final IChatComponent message, final Matcher matcher){
         return new HypeLimitEvent(message);
     }
 
-    public HypeLimitEvent(IChatComponent message) {
+    public HypeLimitEvent(final IChatComponent message) {
         super(message);
     }
 

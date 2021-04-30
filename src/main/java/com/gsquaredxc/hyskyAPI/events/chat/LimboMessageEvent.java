@@ -8,11 +8,11 @@ import java.util.regex.Pattern;
 public class LimboMessageEvent extends EventChat {
     public static Pattern patternToMatch = Pattern.compile("^§cYou are AFK\\. Move around to return from AFK\\.§r$");
 
-    public LimboMessageEvent(IChatComponent message) {
+    public LimboMessageEvent(final IChatComponent message) {
         super(message);
     }
 
-    public static LimboMessageEvent generateEvent(IChatComponent message, Matcher matcher){
+    public static LimboMessageEvent generateEvent(final IChatComponent message, final Matcher matcher){
         return new LimboMessageEvent(message);
     }
 }

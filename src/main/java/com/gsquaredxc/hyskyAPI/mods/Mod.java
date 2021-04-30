@@ -7,7 +7,7 @@ public class Mod {
         return name;
     }
 
-    public Mod(String name){
+    public Mod(final String name){
         this.name = name;
     }
 }

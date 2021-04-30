@@ -10,7 +10,7 @@ public class ScoreboardObjectiveInEvent extends PacketReceiveEvent {
     public final String formattedValue;
     public final String unformattedValue;
 
-    public ScoreboardObjectiveInEvent(S3BPacketScoreboardObjective packet, @Nonnull String formattedValue, @Nonnull String objectiveName){
+    public ScoreboardObjectiveInEvent(final S3BPacketScoreboardObjective packet, @Nonnull final String formattedValue, @Nonnull final String objectiveName){
         super(packet);
         this.formattedValue = formattedValue;
         this.unformattedValue = Utils.removeFormatting(formattedValue);

@@ -22,7 +22,7 @@ public class APILoadedCommand extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(final ICommandSender sender) {
         return "/" + getCommandName();
     }
 
@@ -32,13 +32,13 @@ public class APILoadedCommand extends CommandBase {
     }
 
     @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+    public List<String> addTabCompletionOptions(final ICommandSender sender, final String[] args, final BlockPos pos) {
         return null;
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        EntityPlayerSP player = (EntityPlayerSP) sender;
+    public void processCommand(final ICommandSender sender, final String[] args) throws CommandException {
+        final EntityPlayerSP player = (EntityPlayerSP) sender;
         player.addChatMessage(new ChatComponentText("§a§l[SUCCESS] §8» §aThe API has been loaded."));
     }
 }

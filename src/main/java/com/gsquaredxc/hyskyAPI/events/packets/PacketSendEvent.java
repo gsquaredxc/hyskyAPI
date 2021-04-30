@@ -7,7 +7,7 @@ public class PacketSendEvent extends EventCancellable {
     public final Packet<?> originalPacket;
     public final Object packetClass;
 
-    public PacketSendEvent(Packet<?> originalPacket) {
+    public PacketSendEvent(final Packet<?> originalPacket) {
         this.originalPacket = originalPacket;
         this.packetClass = originalPacket.getClass();
     }

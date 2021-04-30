@@ -10,7 +10,7 @@ public class ServerIdEvent extends EventChat {
 
     String serverId;
 
-    public ServerIdEvent(IChatComponent message, String serverId){
+    public ServerIdEvent(final IChatComponent message, final String serverId){
         super(message);
         this.serverId = serverId;
     }
@@ -22,7 +22,7 @@ public class ServerIdEvent extends EventChat {
                 ", serverID='" + serverId + '\'' +
                 '}';
     }
-    public static ServerIdEvent generateEvent(IChatComponent message, Matcher matcher){
+    public static ServerIdEvent generateEvent(final IChatComponent message, final Matcher matcher){
         return new ServerIdEvent(message, matcher.group(1));
     }
 }

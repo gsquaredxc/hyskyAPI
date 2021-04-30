@@ -8,11 +8,11 @@ import java.util.regex.Pattern;
 public class MiningSpeedBoostEvent extends EventChat {
     public static Pattern patternToMatch = Pattern.compile("^§r§6Mining Speed Boost §r§ais now available!§r$");
 
-    public MiningSpeedBoostEvent(IChatComponent message) {
+    public MiningSpeedBoostEvent(final IChatComponent message) {
         super(message);
     }
 
-    public static MiningSpeedBoostEvent generateEvent(IChatComponent message, Matcher matcher) {
+    public static MiningSpeedBoostEvent generateEvent(final IChatComponent message, final Matcher matcher) {
         return new MiningSpeedBoostEvent(message);
     }
 }

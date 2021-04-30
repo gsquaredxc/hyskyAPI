@@ -6,7 +6,7 @@ public class ModList {
 
     private final ArrayList<Mod> listOfMods = new ArrayList<>();
 
-    public void addModToList(Mod e){
+    public void addModToList(final Mod e){
         listOfMods.add(e);
     }
 

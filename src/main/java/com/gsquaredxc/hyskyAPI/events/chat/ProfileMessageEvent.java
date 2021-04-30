@@ -10,7 +10,7 @@ public class ProfileMessageEvent extends EventChat {
     String fruit;
     boolean coop;
 
-    public ProfileMessageEvent(IChatComponent message, String fruit, boolean coop){
+    public ProfileMessageEvent(final IChatComponent message, final String fruit, final boolean coop){
         super(message);
         this.fruit = fruit;
         this.coop = coop;
@@ -24,7 +24,7 @@ public class ProfileMessageEvent extends EventChat {
                 ", coop=" + coop +
                 '}';
     }
-    public static ProfileMessageEvent generateEvent(IChatComponent message, Matcher matcher){
+    public static ProfileMessageEvent generateEvent(final IChatComponent message, final Matcher matcher){
         if (matcher.groupCount() == 2){
             return new ProfileMessageEvent(message, matcher.group(1),true);
         }

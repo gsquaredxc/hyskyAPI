@@ -11,7 +11,7 @@ public class EventChat extends EventCancellable {
 
     public static Pattern patternToMatch;
 
-    public EventChat(IChatComponent message){
+    public EventChat(final IChatComponent message){
         this.originalMessage = message;
     }
 
@@ -22,7 +22,7 @@ public class EventChat extends EventCancellable {
                 '}';
     }
 
-    public static EventChat generateEvent(IChatComponent message, Matcher matcher) {
+    public static EventChat generateEvent(final IChatComponent message, final Matcher matcher) {
         return new EventChat(message);
     }
 }

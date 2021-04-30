@@ -49,7 +49,7 @@ public class Location {
         return this.LOCK;
     }
 
-    public void setIsOnHypixel(boolean isOnHypixel) {
+    public void setIsOnHypixel(final boolean isOnHypixel) {
         this.isOnHypixel = isOnHypixel;
     }
 
@@ -67,13 +67,13 @@ public class Location {
     }
 
     @EventListener(id="INTERNALjoinGame")
-    public static boolean joinGame(JoinGameInEvent trash){
+    public static boolean joinGame(final JoinGameInEvent trash){
         PlayerListAddInListenerO.reregister("INTERNALreceivePlayerAdd");
         LocationState.update();
             new Thread(()-> {
                 try {
                     Thread.sleep(5000);
-                } catch (InterruptedException e) {
+                } catch (final InterruptedException e) {
                     e.printStackTrace();
                 }
                 if (!LocationState.getLocked() && !LocationState.isUpdated){
@@ -102,7 +102,7 @@ public class Location {
                 if (mc.getCurrentServerData() != null) return mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel");
             }
             return false;
-        } catch(Exception e) {
+        } catch(final Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -113,7 +113,7 @@ public class Location {
     }
 
     @EventListener(id="INTERNALrecieveLocaw")
-    public static boolean receiveLocaw(LocRawEvent event){
+    public static boolean receiveLocaw(final LocRawEvent event){
         if (!LocationState.getLocked() && !LocationState.isUpdated) {
             LocationState.lock();
             LocationState.server = event.server;
@@ -127,7 +127,7 @@ public class Location {
     }
 
     @EventListener(id="INTERNALreceiveScoreboard")
-    public static boolean receiveScoreboard(ScoreboardObjectiveInEvent event){
+    public static boolean receiveScoreboard(final ScoreboardObjectiveInEvent event){
         if (!LocationState.getLocked() && !LocationState.isUpdated) {
             LocationState.lock();
             LocationState.isInSkyblock = event.unformattedValue.contains("SKYBLOCK");
@@ -138,8 +138,8 @@ public class Location {
     }
 
     @EventListener(id="INTERNALreceiveTeams")
-    public static boolean receiveTeams(ScoreboardTeamInEvent event){
-        Matcher matcher = serverNamePattern.matcher(event.unformattedValue);
+    public static boolean receiveTeams(final ScoreboardTeamInEvent event){
+        final Matcher matcher = serverNamePattern.matcher(event.unformattedValue);
         if (matcher.find()){
             System.out.println(Utils.removeFormatting(matcher.group(1)));
         }
@@ -147,7 +147,7 @@ public class Location {
     }
 
     @EventListener(id="INTERNALreceivePlayerAdd")
-    public static boolean receivePlayerAdd(PlayerListAddEvent event){
+    public static boolean receivePlayerAdd(final PlayerListAddEvent event){
         if (event.username.equals("!C-b")){
             LocationState.areaUUID = event.UUID;
             LocationState.serverPlayer = event.displayName.getUnformattedText();
@@ -158,7 +158,7 @@ public class Location {
     }
 
     @EventListener(id="INTERNALreceivePlayerUpdate")
-    public static boolean receivePlayerUpdate(PlayerListUpdateEvent event){
+    public static boolean receivePlayerUpdate(final PlayerListUpdateEvent event){
         if (event.UUID.equals(LocationState.areaUUID)){
             LocationState.serverPlayer = event.displayName.getUnformattedText();
             LocationState.isUpdated = true;
@@ -170,22 +170,22 @@ public class Location {
     public static class LocRawEvent extends EventChat {
         public static Pattern patternToMatch = Pattern.compile("^§f(\\{.+?})§r$");
 
-        public static LocRawEvent generateEvent(IChatComponent message, Matcher matcher) {
+        public static LocRawEvent generateEvent(final IChatComponent message, final Matcher matcher) {
             try {
                 System.out.println(matcher.group(1));
-                JsonObject obj = new Gson().fromJson(matcher.group(1), JsonObject.class);
+                final JsonObject obj = new Gson().fromJson(matcher.group(1), JsonObject.class);
                 if(obj.has("server")) {
-                    String server = obj.get("server").getAsString();
-                    String gametype = obj.get("gametype").getAsString();
+                    final String server = obj.get("server").getAsString();
+                    final String gametype = obj.get("gametype").getAsString();
                     if(obj.has("mode") && obj.has("map")) {
-                        String mode = obj.get("mode").getAsString();
-                        String map = obj.get("map").getAsString();
+                        final String mode = obj.get("mode").getAsString();
+                        final String map = obj.get("map").getAsString();
                         return new LocRawEvent(message, server, gametype, mode, map);
                     } else {
                         return new LocRawEvent(message, server, gametype);
                     }
                 }
-            } catch(Exception e) {
+            } catch(final Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -193,14 +193,14 @@ public class Location {
 
         public String server, gametype, mode, map;
 
-        public LocRawEvent(IChatComponent message, String server, String gametype, String mode, String map) {
+        public LocRawEvent(final IChatComponent message, final String server, final String gametype, final String mode, final String map) {
             super(message);
             this.server = server;
             this.gametype = gametype;
             this.mode = mode;
             this.map = map;
         }
-        public LocRawEvent(IChatComponent message, String server, String gametype) {
+        public LocRawEvent(final IChatComponent message, final String server, final String gametype) {
             super(message);
             this.server = server;
             this.gametype = gametype;

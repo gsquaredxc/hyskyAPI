@@ -15,7 +15,7 @@ public class Utils {
         return true;
     }
 
-    public static String removeFormatting(String toRemove){
+    public static String removeFormatting(final String toRemove){
         return specialFormattingCharacters.matcher(toRemove).replaceAll("");
     }
 }

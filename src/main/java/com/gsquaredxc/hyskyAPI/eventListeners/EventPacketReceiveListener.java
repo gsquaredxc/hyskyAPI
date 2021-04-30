@@ -4,7 +4,7 @@ import com.gsquaredxc.hyskyAPI.events.packets.PacketReceiveEvent;
 
 public class EventPacketReceiveListener extends EventListenerCancellable {
 
-    public EventPacketReceiveListener(Class<? extends PacketReceiveEvent> e) {
+    public EventPacketReceiveListener(final Class<? extends PacketReceiveEvent> e) {
         super(e);
     }
 }

@@ -7,7 +7,7 @@ public class PacketReceiveEvent extends EventCancellable {
     public final Packet<?> originalPacket;
     public final Object packetClass;
 
-    public PacketReceiveEvent(Packet<?> originalPacket) {
+    public PacketReceiveEvent(final Packet<?> originalPacket) {
         this.originalPacket = originalPacket;
         this.packetClass = originalPacket.getClass();
     }

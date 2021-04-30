@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class MVPPSpamEvent extends EventChat {
     public static Pattern patternToMatch = Pattern.compile("^§r §b>§c>§a>§r §r§6\\[MVP§.\\+\\+§6] (?<name>.*?)§f §6joined the lobby!§r §a<§c<§b<§r$");
     String username;
-    public MVPPSpamEvent(IChatComponent message, String username){
+    public MVPPSpamEvent(final IChatComponent message, final String username){
         super(message);
         this.username = username;
     }
@@ -21,7 +21,7 @@ public class MVPPSpamEvent extends EventChat {
                 '}';
     }
 
-    public static MVPPSpamEvent generateEvent(IChatComponent message, Matcher matcher){
+    public static MVPPSpamEvent generateEvent(final IChatComponent message, final Matcher matcher){
         return new MVPPSpamEvent(message, matcher.group(1));
     }
 }

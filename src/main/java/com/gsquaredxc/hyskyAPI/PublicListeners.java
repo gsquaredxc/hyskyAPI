@@ -12,9 +12,9 @@ import java.util.Set;
 public class PublicListeners {
     public static HashMap<Class<? extends Event>, EventListener> listenerHashMap = new HashMap<>();
     public static void registerEvents() {
-        Reflections reflections = new Reflections("com.gsquaredxc.hyskyAPI");
-        Set<Class<? extends Event>> subTypes = reflections.getSubTypesOf(Event.class);
-        for (Class<? extends Event> c : subTypes) {
+        final Reflections reflections = new Reflections("com.gsquaredxc.hyskyAPI");
+        final Set<Class<? extends Event>> subTypes = reflections.getSubTypesOf(Event.class);
+        for (final Class<? extends Event> c : subTypes) {
             if (EventChat.class.isAssignableFrom(c)) {
                listenerHashMap.put(c,new EventChatListener((Class<? extends EventChat>) c));
             } else if (PacketSendEvent.class.isAssignableFrom(c)){

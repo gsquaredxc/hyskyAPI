@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class EventChatListener extends EventListenerCancellable {
     protected Class<? extends EventChat> event;
 
-    public EventChatListener(Class<? extends EventChat> event) {
+    public EventChatListener(final Class<? extends EventChat> event) {
         super(event);
         this.event = event;
     }
@@ -19,19 +19,19 @@ public class EventChatListener extends EventListenerCancellable {
         return (Pattern) event.getField("patternToMatch").get(null);
     }
 
-    public void register(EventCallback e){
+    public void register(final EventCallback e){
         ActiveChatListeners.self.addToChatListeners(this);
         super.register(e);
     }
 
-    public void deregister(String name){
+    public void deregister(final String name){
         super.deregister(name);
         if (!this.active){
             ActiveChatListeners.self.removeFromChatListeners(this);
         }
     }
 
-    public EventChat generateEvent(IChatComponent message, Matcher matcher) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public EventChat generateEvent(final IChatComponent message, final Matcher matcher) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         return (EventChat) event.getMethod("generateEvent", IChatComponent.class, Matcher.class).invoke(null,message,matcher);
     }
 }

@@ -23,7 +23,7 @@ public class HyskyAPI
     private final ModList modList = new ModList();
     
     @EventHandler
-    public void preinit(FMLPreInitializationEvent event)
+    public void preinit(final FMLPreInitializationEvent event)
     {
         PublicListeners.registerEvents();
         PrivateListeners.registerPrivate();
@@ -31,7 +31,7 @@ public class HyskyAPI
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event){
+    public void init(final FMLInitializationEvent event){
         MinecraftForge.EVENT_BUS.register(new ChatListener());
         MinecraftForge.EVENT_BUS.register(new SafeMessageSender());
         //Shit event so not fucking using it.

@@ -16,10 +16,10 @@ public class SafeMessageSender {
     private static long lastChatMessage = 0;
 
     @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
+    public void onTick(final TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
         if (mc.thePlayer != null && sendMessageQueue.size() > 0 && System.currentTimeMillis() - lastChatMessage > 200) {
-            String msg = sendMessageQueue.pollFirst();
+            final String msg = sendMessageQueue.pollFirst();
             if (msg != null) {
                 mc.thePlayer.sendChatMessage(msg);
             }
@@ -28,12 +28,12 @@ public class SafeMessageSender {
 
     /*Listener callback for C01 packets*/
     @EventListener(id = "INTERNALonSendPacket")
-    public static boolean onSendPacket(ChatMessagePacketOutEvent event) {
+    public static boolean onSendPacket(final ChatMessagePacketOutEvent event) {
         lastChatMessage = System.currentTimeMillis();
         return false;
     }
 
-    public void queueMessage(String message){
+    public void queueMessage(final String message){
         sendMessageQueue.add(message);
     }
 }

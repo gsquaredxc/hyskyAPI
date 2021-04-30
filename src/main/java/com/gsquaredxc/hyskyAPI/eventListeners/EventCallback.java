@@ -7,28 +7,28 @@ public class EventCallback {
     protected String name = "";
     protected Method func;
 
-    public EventCallback(Method func) {
+    public EventCallback(final Method func) {
         this.func = func;
     }
-    public EventCallback(Method func, String name) {
+    public EventCallback(final Method func, final String name) {
         this.func = func;
         this.name = name;
     }
 
-    public void callBackToFunction(Event e){
+    public void callBackToFunction(final Event e){
         try {
             func.invoke(func.getDeclaringClass(),e);
-        } catch (IllegalAccessException | InvocationTargetException illegalAccessException) {
+        } catch (final IllegalAccessException | InvocationTargetException illegalAccessException) {
             illegalAccessException.printStackTrace();
         }
     }
 
-    public boolean callBackToFunctionCancellable(Event e){
+    public boolean callBackToFunctionCancellable(final Event e){
         try {
             return (boolean) func.invoke(func.getDeclaringClass(),e);
-        } catch (IllegalAccessException | InvocationTargetException illegalAccessException) {
+        } catch (final IllegalAccessException | InvocationTargetException illegalAccessException) {
             illegalAccessException.printStackTrace();
-        } catch (NullPointerException error){
+        } catch (final NullPointerException error){
             error.printStackTrace();
             System.err.println("This error may be caused by the listener function returning void instead of boolean. ");
         }
