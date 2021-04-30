@@ -1,0 +1,16 @@
+[
+{
+  "modid": "hyskyapi",
+  "name": "HySkyAPI",
+  "description": "HySkyAPI: Hypixel Skyblock API",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["gsquaredxc"],
+  "credits": "gsquaredxc",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
