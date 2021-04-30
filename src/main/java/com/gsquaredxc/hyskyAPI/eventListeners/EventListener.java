@@ -1,10 +1,6 @@
 package com.gsquaredxc.hyskyAPI.eventListeners;
 
-import com.gsquaredxc.hyskyAPI.events.packets.PacketSendEvent;
-
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class EventListener implements java.util.EventListener {
     protected boolean active = false;

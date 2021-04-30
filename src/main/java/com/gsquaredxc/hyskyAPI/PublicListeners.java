@@ -28,14 +28,4 @@ public class PublicListeners {
             }
         }
     }
-    /*public final static MVPSpamListener MVPSpamListenerO = new MVPSpamListener();
-    public final static MVPPSpamListener MVPPSpamListenerO = new MVPPSpamListener();
-    public final static LimboMessageListener LimboMessageListenerO = new LimboMessageListener();
-    public final static ServerIdListener ServerIdListenerO = new ServerIdListener();
-    public final static ProfileMessageListener ProfileMessageListenerO = new ProfileMessageListener();
-    public final static HypeLimitListener HypeLimitListenerO = new HypeLimitListener();
-    public final static EmptyMessageListener EmptyMessageListenerO = new EmptyMessageListener();
-    public final static MiningSpeedBoostListener MiningSpeedBoostListenerO = new MiningSpeedBoostListener();
-    public final static ChatMessagePacketListener ChatMessagePacketListenerO = new ChatMessagePacketListener();
-    public final static EventPacketSendListener EventPacketSendListenerO = new EventPacketSendListener();*/
 }
