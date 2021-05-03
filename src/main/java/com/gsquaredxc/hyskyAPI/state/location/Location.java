@@ -24,12 +24,12 @@ public class Location {
 
     private UUID areaUUID;
 
-    private boolean isUpdated = false;
+    private boolean isDirty = true;
     private boolean isOnHypixel = false;
     private boolean isInSkyblock = false;
-    public String server, gametype, mode, map;
+    private ServerTypes serverType;
 
-    public String serverPlayer;
+    private String server, gametype, mode, map;
 
     private boolean LOCK = false;
 
@@ -53,14 +53,12 @@ public class Location {
         this.isOnHypixel = isOnHypixel;
     }
 
-    public void update(){
-        isUpdated = false;
-        isOnHypixel = getIsOnHypixel();
+    public void markDirty(){
+        isDirty = true;
     }
 
     public void updateWithLocraw(){
-        isUpdated = false;
-        isOnHypixel = getIsOnHypixel();
+        isDirty = true;
         if (isOnHypixel) {
             sendLocraw();
         }
@@ -69,14 +67,14 @@ public class Location {
     @EventListener(id="INTERNALjoinGame")
     public static boolean joinGame(final JoinGameInEvent trash){
         PlayerListAddInListenerO.reregister("INTERNALreceivePlayerAdd");
-        LocationState.update();
+        LocationState.markDirty();
             new Thread(()-> {
                 try {
                     Thread.sleep(5000);
                 } catch (final InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (!LocationState.getLocked() && !LocationState.isUpdated){
+                if (!LocationState.getLocked() && LocationState.isDirty && LocationState.isOnHypixel){
                     LocationState.lock();
                     LocationState.sendLocraw();
                     LocationState.unlock();
@@ -89,23 +87,8 @@ public class Location {
         if (gametype.equals("SKYBLOCK")){
             isInSkyblock = true;
         }
-        isUpdated = true;
+        isDirty = false;
         System.out.println(server+gametype+mode+map+"ez");
-    }
-
-    public static boolean getIsOnHypixel() {
-        try {
-            if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
-                if (mc.thePlayer != null && mc.thePlayer.getClientBrand() != null) {
-                    if (mc.thePlayer.getClientBrand().toLowerCase().contains("hypixel")) return true;
-                }
-                if (mc.getCurrentServerData() != null) return mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel");
-            }
-            return false;
-        } catch(final Exception e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     public void sendLocraw(){
@@ -114,7 +97,7 @@ public class Location {
 
     @EventListener(id="INTERNALrecieveLocaw")
     public static boolean receiveLocaw(final LocRawEvent event){
-        if (!LocationState.getLocked() && !LocationState.isUpdated) {
+        if (!LocationState.getLocked() && LocationState.isDirty) {
             LocationState.lock();
             LocationState.server = event.server;
             LocationState.gametype = event.gametype;
@@ -128,10 +111,10 @@ public class Location {
 
     @EventListener(id="INTERNALreceiveScoreboard")
     public static boolean receiveScoreboard(final ScoreboardObjectiveInEvent event){
-        if (!LocationState.getLocked() && !LocationState.isUpdated) {
+        if (!LocationState.getLocked() && LocationState.isDirty) {
             LocationState.lock();
             LocationState.isInSkyblock = event.unformattedValue.contains("SKYBLOCK");
-            LocationState.isUpdated = true;
+            LocationState.isDirty = false;
             LocationState.unlock();
         }
         return false;
@@ -150,7 +133,6 @@ public class Location {
     public static boolean receivePlayerAdd(final PlayerListAddEvent event){
         if (event.username.equals("!C-b")){
             LocationState.areaUUID = event.UUID;
-            LocationState.serverPlayer = event.displayName.getUnformattedText();
             PlayerListAddInListenerO.deregister("INTERNALreceivePlayerAdd");
             PlayerListUpdateInListenerO.reregister("INTERNALreceivePlayerUpdate");
         }
@@ -160,8 +142,8 @@ public class Location {
     @EventListener(id="INTERNALreceivePlayerUpdate")
     public static boolean receivePlayerUpdate(final PlayerListUpdateEvent event){
         if (event.UUID.equals(LocationState.areaUUID)){
-            LocationState.serverPlayer = event.displayName.getUnformattedText();
-            LocationState.isUpdated = true;
+            LocationState.isDirty = false;
+            LocationState.serverType = ServerTypes.getFromTab(event.displayName.getUnformattedText());
             PlayerListUpdateInListenerO.deregister("INTERNALreceivePlayerUpdate");
         }
         return false;
