@@ -29,6 +29,7 @@ public class Location {
     private boolean isInSkyblock = false;
     private ServerTypes serverType;
 
+    /*internal use, unused currently*/
     private String server, gametype, mode, map;
 
     private boolean LOCK = false;
@@ -143,7 +144,7 @@ public class Location {
     public static boolean receivePlayerUpdate(final PlayerListUpdateEvent event){
         if (event.UUID.equals(LocationState.areaUUID)){
             LocationState.isDirty = false;
-            LocationState.serverType = ServerTypes.getFromTab(event.displayName.getUnformattedText());
+            LocationState.serverType = ServerTypes.getFromTab(event.displayName.getUnformattedText().replace("Area: ",""));
             PlayerListUpdateInListenerO.deregister("INTERNALreceivePlayerUpdate");
         }
         return false;

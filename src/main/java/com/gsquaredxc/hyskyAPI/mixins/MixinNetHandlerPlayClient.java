@@ -38,7 +38,7 @@ public class MixinNetHandlerPlayClient {
     }
 
     //Theres a shitty event for this on the forge side so we have to inject it.
-    //Called extremely rarely
+    //Called once per server connection I think
     @Inject(method = "handleJoinGame", at = @At("TAIL"))
     private void onJoinGame(final S01PacketJoinGame packet, final CallbackInfo ci){
         if (JoinGameInListenerO.isActive()) {
@@ -46,7 +46,7 @@ public class MixinNetHandlerPlayClient {
         }
     }
 
-    //Called extremely rarely
+    //Called once per server connection
     @Inject(method = "handleCustomPayload", at = @At("TAIL"))
     private void onCustomPayload(final S3FPacketCustomPayload packetIn, final CallbackInfo ci){
         if ("MC|Brand".equals(packetIn.getChannelName())){
