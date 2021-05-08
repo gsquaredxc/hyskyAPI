@@ -54,6 +54,14 @@ public class Location {
         this.isOnHypixel = isOnHypixel;
     }
 
+    public boolean getIsOnHypixel(){
+        return this.isOnHypixel;
+    }
+
+    public ServerTypes getServerType(){
+        return this.serverType;
+    }
+
     public void markDirty(){
         isDirty = true;
     }
@@ -88,6 +96,7 @@ public class Location {
         if (gametype.equals("SKYBLOCK")){
             isInSkyblock = true;
         }
+        LocationState.serverType = ServerTypes.getFromLocraw(server);
         isDirty = false;
         System.out.println(server+gametype+mode+map+"ez");
     }
