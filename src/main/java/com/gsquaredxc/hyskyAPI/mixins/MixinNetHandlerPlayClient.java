@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static com.gsquaredxc.hyskyAPI.PrivateListeners.*;
 
 @Mixin(NetHandlerPlayClient.class)
-public class MixinNetHandlerPlayClient {
+public abstract class MixinNetHandlerPlayClient {
     @Shadow private Minecraft gameController;
 
     //Called often

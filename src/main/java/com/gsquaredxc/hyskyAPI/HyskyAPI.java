@@ -4,7 +4,7 @@ import com.gsquaredxc.hyskyAPI.commands.APILoadedCommand;
 import com.gsquaredxc.hyskyAPI.eventListeners.EventRegister;
 import com.gsquaredxc.hyskyAPI.listeners.ChatListener;
 import com.gsquaredxc.hyskyAPI.mods.ModList;
-import com.gsquaredxc.hyskyAPI.state.location.Location;
+import com.gsquaredxc.hyskyAPI.state.location.SLocationHelpers;
 import com.gsquaredxc.hyskyAPI.utils.SafeMessageSender;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -37,7 +37,7 @@ public class HyskyAPI
         //Shit event so not fucking using it.
         //MinecraftForge.EVENT_BUS.register(new WorldLoadListener());
         EventRegister.register(SafeMessageSender.class);
-        EventRegister.register(Location.class);
+        EventRegister.register(SLocationHelpers.class);
         //ChatMessagePacketListenerO.register(new EventCallback(onSendPacket, "SafeMessageSender"));
     }
 }

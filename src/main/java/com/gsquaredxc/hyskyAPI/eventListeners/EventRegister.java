@@ -8,19 +8,35 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 
 public class EventRegister {
+    static private final MethodHandles.Lookup lookup = MethodHandles.lookup();
     public static void register(final Class<?> c){
-        final MethodHandles.Lookup lookup = MethodHandles.lookup();
         for (final Method m: c.getDeclaredMethods()){
-            if (m.isAnnotationPresent(EventListener.class) && m.getParameterCount() == 1){
-                final EventListener eventl = m.getAnnotation(EventListener.class);
-                try {
-                    final MethodHandle handledMethod = lookup.unreflect(m);
-                    final com.gsquaredxc.hyskyAPI.eventListeners.EventListener eventListener = PublicListeners.listenerHashMap.get(m.getParameterTypes()[0]);
-                    eventListener.register(new EventCallback(handledMethod, eventl.id()));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
+            register(m);
         }
+    }
+
+    //Assume method is preprocessed.
+    public static void register(final Method m){
+        if (m.isAnnotationPresent(EventListener.class) && m.getParameterCount() == 1){
+            final EventListener eventl = m.getAnnotation(EventListener.class);
+            final com.gsquaredxc.hyskyAPI.eventListeners.EventListener eventListener = PublicListeners.listenerHashMap.get(m.getParameterTypes()[0]);
+            registerToListener(eventListener,m,eventl.id());
+        }
+    }
+
+    public static void registerToListener(final com.gsquaredxc.hyskyAPI.eventListeners.EventListener e, final Method m, final String s){
+        e.register(new EventCallback(privateMethodToHandle(m), s));
+    }
+
+    public static MethodHandle privateMethodToHandle(final Method m){
+        try {
+            m.setAccessible(true);
+            final MethodHandle mh = lookup.unreflect(m);
+            m.setAccessible(false);
+            return mh;
+        } catch (final IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null; //will probably crash, TODO look into
     }
 }
