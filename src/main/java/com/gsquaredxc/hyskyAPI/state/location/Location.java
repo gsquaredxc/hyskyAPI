@@ -58,6 +58,10 @@ public class Location {
         return this.isOnHypixel;
     }
 
+    public boolean getIsOnSkyblock(){
+        return this.isInSkyblock;
+    }
+
     public ServerTypes getServerType(){
         return this.serverType;
     }
