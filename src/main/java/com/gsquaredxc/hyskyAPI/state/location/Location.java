@@ -7,7 +7,6 @@ import com.gsquaredxc.hyskyAPI.events.chat.EventChat;
 import com.gsquaredxc.hyskyAPI.events.packets.*;
 import com.gsquaredxc.hyskyAPI.utils.SafeMessageSender;
 import com.gsquaredxc.hyskyAPI.utils.Utils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.IChatComponent;
 
 import java.util.UUID;
@@ -19,7 +18,6 @@ import static com.gsquaredxc.hyskyAPI.PrivateListeners.PlayerListUpdateInListene
 import static com.gsquaredxc.hyskyAPI.state.PlayerStates.LocationState;
 
 public class Location {
-    private static final Minecraft mc = Minecraft.getMinecraft();
     private static final Pattern serverNamePattern = Pattern.compile("^ §7⏣ §.(.*)$");
 
     private UUID areaUUID;
@@ -27,7 +25,7 @@ public class Location {
     private boolean isDirty = true;
     private boolean isOnHypixel = false;
     private boolean isInSkyblock = false;
-    private ServerTypes serverType;
+    private ServerTypes serverType = ServerTypes.UNKNOWN;
 
     /*internal use, unused currently*/
     private String server, gametype, mode, map;
