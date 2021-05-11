@@ -19,6 +19,7 @@ public class PrivateListeners {
     public static EventPacketReceiveListener PlayerListUpdateInListenerO;
     public static EventPacketReceiveListener JoinGameInListenerO;
     public static EventListener ServerTypeKnownListenerO;
+    public static EventPacketReceiveListener TitleInListenerO;
 
     public static void registerPrivate(){
         ChatMessagePacketListenerO = (EventPacketSendListener) PublicListeners.listenerHashMap.get(ChatMessagePacketOutEvent.class);
@@ -29,5 +30,6 @@ public class PrivateListeners {
         PlayerListUpdateInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(PlayerListUpdateEvent.class);
         JoinGameInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(JoinGameInEvent.class);
         ServerTypeKnownListenerO = PublicListeners.listenerHashMap.get(ServerTypeKnownEvent.class);
+        TitleInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(TitleInEvent.class);
     }
 }

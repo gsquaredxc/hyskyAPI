@@ -10,7 +10,10 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class PublicListeners {
+
     public static HashMap<Class<? extends Event>, EventListener> listenerHashMap = new HashMap<>();
+
+    @SuppressWarnings("unchecked")
     public static void registerEvents() {
         final Reflections reflections = new Reflections("com.gsquaredxc.hyskyAPI");
         final Set<Class<? extends Event>> subTypes = reflections.getSubTypesOf(Event.class);

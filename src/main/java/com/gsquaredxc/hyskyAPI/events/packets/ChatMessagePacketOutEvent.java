@@ -1,6 +1,5 @@
 package com.gsquaredxc.hyskyAPI.events.packets;
 
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C01PacketChatMessage;
 
 public class ChatMessagePacketOutEvent extends PacketSendEvent{

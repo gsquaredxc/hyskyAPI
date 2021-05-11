@@ -85,4 +85,13 @@ public abstract class MixinNetHandlerPlayClient {
             ScoreboardObjectiveInListenerO.eventHappens(new ScoreboardObjectiveInEvent(packet,packet.func_149337_d(),packet.func_149339_c()));
         }
     }
+
+    @Inject(method = "handleTitle", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/play/server/S45PacketTitle;getType()Lnet/minecraft/network/play/server/S45PacketTitle$Type;"), cancellable = true)
+    private void onScreenTitle(final S45PacketTitle packet, final CallbackInfo ci){
+        if (TitleInListenerO.isActive()){
+            if (TitleInListenerO.eventHappens(new TitleInEvent(packet))){
+                ci.cancel();
+            }
+        }
+    }
 }
