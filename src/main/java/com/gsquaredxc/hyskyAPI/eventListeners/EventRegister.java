@@ -43,7 +43,7 @@ public class EventRegister {
     public static void registerToListener(final com.gsquaredxc.hyskyAPI.eventListeners.EventListener e, final Method m, final String s){
         MethodHandle mh = privateMethodToHandle(m);
         if (!Modifier.isStatic(m.getModifiers())) {
-            mh = mh.bindTo(null);
+            throw new RuntimeException("Attempted to register a non-static method without an object.");
         }
         e.register(new EventCallback(mh, s));
     }

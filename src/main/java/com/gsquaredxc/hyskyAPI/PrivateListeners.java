@@ -3,7 +3,9 @@ package com.gsquaredxc.hyskyAPI;
 import com.gsquaredxc.hyskyAPI.eventListeners.EventListener;
 import com.gsquaredxc.hyskyAPI.eventListeners.EventPacketReceiveListener;
 import com.gsquaredxc.hyskyAPI.eventListeners.EventPacketSendListener;
-import com.gsquaredxc.hyskyAPI.events.misc.ServerTypeKnownEvent;
+import com.gsquaredxc.hyskyAPI.events.custom.ServerTypeKnownEvent;
+import com.gsquaredxc.hyskyAPI.events.custom.SkyblockDisconnectEvent;
+import com.gsquaredxc.hyskyAPI.events.misc.DisconnectEvent;
 import com.gsquaredxc.hyskyAPI.events.packets.*;
 
 /*
@@ -20,6 +22,8 @@ public class PrivateListeners {
     public static EventPacketReceiveListener JoinGameInListenerO;
     public static EventListener ServerTypeKnownListenerO;
     public static EventPacketReceiveListener TitleInListenerO;
+    public static EventListener DisconnectListenerO;
+    public static EventListener SkyblockDisconnectListenerO;
 
     public static void registerPrivate(){
         ChatMessagePacketListenerO = (EventPacketSendListener) PublicListeners.listenerHashMap.get(ChatMessagePacketOutEvent.class);
@@ -31,5 +35,7 @@ public class PrivateListeners {
         JoinGameInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(JoinGameInEvent.class);
         ServerTypeKnownListenerO = PublicListeners.listenerHashMap.get(ServerTypeKnownEvent.class);
         TitleInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(TitleInEvent.class);
+        DisconnectListenerO = PublicListeners.listenerHashMap.get(DisconnectEvent.class);
+        SkyblockDisconnectListenerO = PublicListeners.listenerHashMap.get(SkyblockDisconnectEvent.class);
     }
 }

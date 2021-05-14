@@ -1,4 +1,4 @@
-package com.gsquaredxc.hyskyAPI.events.misc;
+package com.gsquaredxc.hyskyAPI.events.custom;
 
 import com.gsquaredxc.hyskyAPI.eventListeners.Event;
 

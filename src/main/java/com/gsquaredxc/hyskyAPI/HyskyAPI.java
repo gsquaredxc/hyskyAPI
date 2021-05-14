@@ -1,5 +1,6 @@
 package com.gsquaredxc.hyskyAPI;
 
+import com.gsquaredxc.hyskyAPI.StateRegister.StateRegisters;
 import com.gsquaredxc.hyskyAPI.commands.APILoadedCommand;
 import com.gsquaredxc.hyskyAPI.eventListeners.EventRegister;
 import com.gsquaredxc.hyskyAPI.listeners.ChatListener;
@@ -38,6 +39,7 @@ public class HyskyAPI
         //MinecraftForge.EVENT_BUS.register(new WorldLoadListener());
         EventRegister.register(SafeMessageSender.class);
         EventRegister.register(SLocationHelpers.class);
+        EventRegister.register(StateRegisters.inSkyblock);
         //ChatMessagePacketListenerO.register(new EventCallback(onSendPacket, "SafeMessageSender"));
     }
 }

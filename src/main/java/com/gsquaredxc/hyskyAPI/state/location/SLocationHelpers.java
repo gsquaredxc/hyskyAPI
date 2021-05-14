@@ -2,6 +2,7 @@ package com.gsquaredxc.hyskyAPI.state.location;
 
 import com.gsquaredxc.hyskyAPI.annotations.EventListener;
 import com.gsquaredxc.hyskyAPI.events.chat.LocRawEvent;
+import com.gsquaredxc.hyskyAPI.events.custom.SkyblockDisconnectEvent;
 import com.gsquaredxc.hyskyAPI.events.packets.*;
 import com.gsquaredxc.hyskyAPI.utils.SafeMessageSender;
 import net.minecraft.util.StringUtils;
@@ -9,8 +10,7 @@ import net.minecraft.util.StringUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.gsquaredxc.hyskyAPI.PrivateListeners.PlayerListAddInListenerO;
-import static com.gsquaredxc.hyskyAPI.PrivateListeners.PlayerListUpdateInListenerO;
+import static com.gsquaredxc.hyskyAPI.PrivateListeners.*;
 import static com.gsquaredxc.hyskyAPI.state.PlayerStates.LocationState;
 
 public class SLocationHelpers {
@@ -34,7 +34,11 @@ public class SLocationHelpers {
     public static boolean receiveScoreboard(final ScoreboardObjectiveInEvent event){
         if (!LocationState.getLocked() && LocationState.isDirty) {
             LocationState.lock();
+            final boolean cacheState = LocationState.isInSkyblock;
             LocationState.isInSkyblock = event.unformattedValue.contains("SKYBLOCK");
+            if (!LocationState.isInSkyblock && cacheState){
+                SkyblockDisconnectListenerO.eventHappens(new SkyblockDisconnectEvent());
+            }
             LocationState.isDirty = false;
             LocationState.unlock();
         }
@@ -94,8 +98,10 @@ public class SLocationHelpers {
     }
 
     public static void updateAfterLocRaw(){
-        if (LocationState.gametype.equals("SKYBLOCK")){
-            LocationState.isInSkyblock = true;
+        final boolean cacheState = LocationState.isInSkyblock;
+        LocationState.isInSkyblock = LocationState.gametype.equals("SKYBLOCK");
+        if (!LocationState.isInSkyblock && cacheState){
+            SkyblockDisconnectListenerO.eventHappens(new SkyblockDisconnectEvent());
         }
         LocationState.serverType = ServerTypes.getFromLocraw(LocationState.server);
         LocationState.isDirty = false;

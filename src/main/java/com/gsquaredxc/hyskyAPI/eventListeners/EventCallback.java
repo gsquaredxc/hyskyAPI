@@ -33,4 +33,8 @@ public class EventCallback {
         }
         return false;
     }
+
+    public String getName(){
+        return name;
+    }
 }
