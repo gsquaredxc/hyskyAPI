@@ -6,6 +6,7 @@ import com.gsquaredxc.hyskyAPI.eventListeners.EventPacketSendListener;
 import com.gsquaredxc.hyskyAPI.events.custom.ServerTypeKnownEvent;
 import com.gsquaredxc.hyskyAPI.events.custom.SkyblockDisconnectEvent;
 import com.gsquaredxc.hyskyAPI.events.misc.DisconnectEvent;
+import com.gsquaredxc.hyskyAPI.events.misc.TickStartEvent;
 import com.gsquaredxc.hyskyAPI.events.packets.*;
 
 /*
@@ -24,6 +25,7 @@ public class PrivateListeners {
     public static EventPacketReceiveListener TitleInListenerO;
     public static EventListener DisconnectListenerO;
     public static EventListener SkyblockDisconnectListenerO;
+    public static EventListener OnTickListenerO;
 
     public static void registerPrivate(){
         ChatMessagePacketListenerO = (EventPacketSendListener) PublicListeners.listenerHashMap.get(ChatMessagePacketOutEvent.class);
@@ -37,5 +39,6 @@ public class PrivateListeners {
         TitleInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(TitleInEvent.class);
         DisconnectListenerO = PublicListeners.listenerHashMap.get(DisconnectEvent.class);
         SkyblockDisconnectListenerO = PublicListeners.listenerHashMap.get(SkyblockDisconnectEvent.class);
+        OnTickListenerO = PublicListeners.listenerHashMap.get(TickStartEvent.class);
     }
 }
