@@ -52,37 +52,43 @@ public abstract class StateRegister {
     public void dequeueCallback(final String string){
         if (!state){
             for (final Map.Entry<EventCallback, EventListener> entry :enqueuedForState.entrySet()){
-                if (entry.getKey().getName().equals(string)) {
-                    enqueuedForState.remove(entry.getKey());
+                final EventCallback callback = entry.getKey();
+                if (callback.getName().equals(string)) {
+                    enqueuedForState.remove(callback);
                     return;
                 }
             }
         } else {
             for (final Map.Entry<EventCallback, EventListener> entry :activeForState.entrySet()) {
-                if (entry.getKey().getName().equals(string)) {
-                    final EventCallback callback = entry.getKey();
-                    entry.getValue().deregister(callback.getName());
+                final EventCallback callback = entry.getKey();
+                final String name = callback.getName();
+                if (name.equals(string)) {
+                    entry.getValue().deregister(name);
                     activeForState.remove(callback);
                 }
             }
         }
     }
 
-    protected void onPositiveState(){
-        state = true;
-        activeForState.putAll(enqueuedForState);
-        for (final Map.Entry<EventCallback, EventListener> entry :enqueuedForState.entrySet()){
-            entry.getValue().safeRegister(entry.getKey());
+    protected void onPositiveState() {
+        if (!state) {
+            state = true;
+            activeForState.putAll(enqueuedForState);
+            for (final Map.Entry<EventCallback, EventListener> entry : enqueuedForState.entrySet()) {
+                entry.getValue().safeRegister(entry.getKey());
+            }
+            enqueuedForState.clear();
         }
-        enqueuedForState.clear();
     }
 
-    protected void onNegativeState(){
-        state = false;
-        enqueuedForState.putAll(activeForState);
-        for (final Map.Entry<EventCallback, EventListener> entry :enqueuedForState.entrySet()){
-            entry.getValue().deregister(entry.getKey().getName());
+    protected void onNegativeState() {
+        if (state) {
+            state = false;
+            enqueuedForState.putAll(activeForState);
+            for (final Map.Entry<EventCallback, EventListener> entry : enqueuedForState.entrySet()) {
+                entry.getValue().deregister(entry.getKey().getName());
+            }
+            activeForState.clear();
         }
-        activeForState.clear();
     }
 }

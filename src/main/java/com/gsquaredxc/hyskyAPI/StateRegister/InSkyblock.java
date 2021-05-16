@@ -12,12 +12,12 @@ import com.gsquaredxc.hyskyAPI.events.custom.SkyblockDisconnectEvent;
  * @disabled SkyblockDisconnectEvent
  */
 public class InSkyblock extends StateRegister{
-    @EventListener(id="INTERNALInSkyblocactivek")
-    public void serverTypeKnown(ServerTypeKnownEvent e){
+    @EventListener(id="INTERNALInSkyblockactive")
+    public void serverTypeKnown(final ServerTypeKnownEvent e){
         onPositiveState();
     }
     @EventListener(id="INTERNALInSkyblockdisabled")
-    public void disconnected(SkyblockDisconnectEvent e){
+    public void disconnected(final SkyblockDisconnectEvent e){
         onNegativeState();
     }
 }

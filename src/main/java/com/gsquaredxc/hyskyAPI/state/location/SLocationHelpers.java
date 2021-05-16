@@ -2,6 +2,7 @@ package com.gsquaredxc.hyskyAPI.state.location;
 
 import com.gsquaredxc.hyskyAPI.annotations.EventListener;
 import com.gsquaredxc.hyskyAPI.events.chat.LocRawEvent;
+import com.gsquaredxc.hyskyAPI.events.custom.ServerTypeKnownEvent;
 import com.gsquaredxc.hyskyAPI.events.custom.SkyblockDisconnectEvent;
 import com.gsquaredxc.hyskyAPI.events.packets.*;
 import com.gsquaredxc.hyskyAPI.utils.SafeMessageSender;
@@ -69,6 +70,9 @@ public class SLocationHelpers {
         if (event.UUID.equals(LocationState.areaUUID)){
             LocationState.isDirty = false;
             LocationState.serverType = ServerTypes.getFromTab(event.displayName.getUnformattedText().replace("Area: ",""));
+            if (LocationState.getServerType() != ServerTypes.UNKNOWN) {
+                ServerTypeKnownListenerO.eventHappens(new ServerTypeKnownEvent());
+            }
             PlayerListUpdateInListenerO.deregister("INTERNALreceivePlayerUpdate");
         }
         return false;
