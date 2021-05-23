@@ -15,6 +15,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: "org.spongepowered.mixin"
+apply plugin: 'maven-publish'
 
 /*
 // for people who want stable - not yet functional for MC 1.8.8 - we require the forgegradle 2.1 snapshot
@@ -22,9 +23,9 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.0"
+version = "1.0.0.6"
 group= "com.gsquaredxc.hyskyAPI" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "hyskyAPI"
+archivesBaseName = "hyskyapi"
 //gradle.jvmargs="-Xmx8g"
 
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
@@ -129,4 +130,26 @@ processResources
 
 sourceSets {
     main { output.resourcesDir = output.classesDir }
+}
+
+tasks.publish.dependsOn build
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/gsquaredxc/hyskyapi"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId project.archivesBaseName
+            from components.java
+
+            artifact sourceJar
+        }
+    }
 }
