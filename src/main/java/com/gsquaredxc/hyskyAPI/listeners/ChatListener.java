@@ -19,7 +19,7 @@ public class ChatListener {
         /* Chat messages */
         if (event.type == 0) {
             System.out.println(formattedText);
-            for (final EventChatListener listener : ActiveChatListeners.self.getActiveListners()) {
+            for (final EventChatListener listener : ActiveChatListeners.self.getActiveListeners()) {
                 try {
                     final Matcher matcher = listener.getPatternToMatch().matcher(formattedText);
                     if (matcher.find()) {

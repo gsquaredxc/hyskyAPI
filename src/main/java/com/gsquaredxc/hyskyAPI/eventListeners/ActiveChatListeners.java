@@ -5,18 +5,18 @@ import java.util.ArrayList;
 public class ActiveChatListeners {
     public static ActiveChatListeners self = new ActiveChatListeners();
 
-    private final ArrayList<EventChatListener> activeListners = new ArrayList<>();
+    private final ArrayList<EventChatListener> activeListeners = new ArrayList<>();
 
     public void addToChatListeners(final EventChatListener e){
-        activeListners.add(e);
+        activeListeners.add(e);
     }
 
     public void removeFromChatListeners(final EventChatListener e) {
-        activeListners.remove(e);
+        activeListeners.remove(e);
     }
 
-    public ArrayList<EventChatListener> getActiveListners() {
-        return activeListners;
+    public ArrayList<EventChatListener> getActiveListeners() {
+        return activeListeners;
     }
 
 }
