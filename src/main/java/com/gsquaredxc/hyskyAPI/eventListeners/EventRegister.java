@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 public class EventRegister {
-    static private final MethodHandles.Lookup lookup = MethodHandles.lookup();
+    private static final MethodHandles.Lookup lookup = MethodHandles.lookup();
     //IMPORTANT: Objects must be passed in for kotlin because kotlin is an absolute pain in the ass
     public static void register(final Object o){
         for (final Method m: o.getClass().getDeclaredMethods()){
