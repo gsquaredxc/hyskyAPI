@@ -1,6 +1,6 @@
 # hyskyAPI
 
-##Summary of this project:
+## Summary of this project:
 
 HySkyAPI is designed to assist developers in dealing with some of the magic behind the scenes of Skyblock mods.
 The goal is to reduce development time for Skyblock mods while remaining performant.
