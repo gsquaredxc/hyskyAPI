@@ -2,7 +2,6 @@ package com.gsquaredxc.hyskyAPI.listeners;
 
 import com.gsquaredxc.hyskyAPI.eventListeners.ActiveChatListeners;
 import com.gsquaredxc.hyskyAPI.eventListeners.EventChatListener;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -11,7 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.regex.Matcher;
 
 public class ChatListener {
-    public static Minecraft mc = Minecraft.getMinecraft();
 
     @SubscribeEvent(receiveCanceled = true, priority = EventPriority.HIGHEST)
     public void onChat(final ClientChatReceivedEvent event) {
@@ -19,7 +17,7 @@ public class ChatListener {
         /* Chat messages */
         if (event.type == 0) {
             System.out.println(formattedText);
-            for (final EventChatListener listener : ActiveChatListeners.self.getActiveListeners()) {
+            for (final EventChatListener listener : ActiveChatListeners.getActiveListeners()) {
                 try {
                     final Matcher matcher = listener.getPatternToMatch().matcher(formattedText);
                     if (matcher.find()) {

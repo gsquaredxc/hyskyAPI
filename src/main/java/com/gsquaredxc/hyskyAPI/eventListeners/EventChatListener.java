@@ -20,14 +20,14 @@ public class EventChatListener extends EventListenerCancellable {
     }
 
     public void register(final EventCallback e){
-        ActiveChatListeners.self.addToChatListeners(this);
+        ActiveChatListeners.addToChatListeners(this);
         super.register(e);
     }
 
     public void deregister(final String name){
         super.deregister(name);
         if (!this.active){
-            ActiveChatListeners.self.removeFromChatListeners(this);
+            ActiveChatListeners.removeFromChatListeners(this);
         }
     }
 
