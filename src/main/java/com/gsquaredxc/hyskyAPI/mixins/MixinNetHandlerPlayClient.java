@@ -94,4 +94,12 @@ public abstract class MixinNetHandlerPlayClient {
             }
         }
     }
+    @Inject(method = "handleSoundEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/WorldClient;playSound(DDDLjava/lang/String;FFZ)V"), cancellable = true)
+    private void onSound(final S29PacketSoundEffect packet, final CallbackInfo ci){
+        if (SoundPacketInListenerO.isActive()){
+            if (SoundPacketInListenerO.eventHappens(new SoundPacketInEvent(packet))){
+                ci.cancel();
+            }
+        }
+    }
 }

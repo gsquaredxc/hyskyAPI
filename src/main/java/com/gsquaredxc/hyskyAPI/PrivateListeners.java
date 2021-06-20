@@ -26,6 +26,7 @@ public class PrivateListeners {
     public static EventListener DisconnectListenerO;
     public static EventListener SkyblockDisconnectListenerO;
     public static EventListener OnTickListenerO;
+    public static EventPacketReceiveListener SoundPacketInListenerO;
 
     public static void registerPrivate(){
         ChatMessagePacketListenerO = (EventPacketSendListener) PublicListeners.listenerHashMap.get(ChatMessagePacketOutEvent.class);
@@ -40,5 +41,6 @@ public class PrivateListeners {
         DisconnectListenerO = PublicListeners.listenerHashMap.get(DisconnectEvent.class);
         SkyblockDisconnectListenerO = PublicListeners.listenerHashMap.get(SkyblockDisconnectEvent.class);
         OnTickListenerO = PublicListeners.listenerHashMap.get(TickStartEvent.class);
+        SoundPacketInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(SoundPacketInEvent.class);
     }
 }
