@@ -4,6 +4,7 @@ import com.gsquaredxc.hyskyAPI.StateRegister.StateRegisters;
 import com.gsquaredxc.hyskyAPI.commands.APILoadedCommand;
 import com.gsquaredxc.hyskyAPI.eventListeners.EventRegister;
 import com.gsquaredxc.hyskyAPI.listeners.ChatListener;
+import com.gsquaredxc.hyskyAPI.listeners.TickListener;
 import com.gsquaredxc.hyskyAPI.mods.ModList;
 import com.gsquaredxc.hyskyAPI.state.location.SLocationHelpers;
 import com.gsquaredxc.hyskyAPI.utils.SafeMessageSender;
@@ -35,6 +36,7 @@ public class HyskyAPI
     public void init(final FMLInitializationEvent event){
         MinecraftForge.EVENT_BUS.register(new ChatListener());
         MinecraftForge.EVENT_BUS.register(new SafeMessageSender());
+        MinecraftForge.EVENT_BUS.register(new TickListener());
         //Shit event so not fucking using it.
         //MinecraftForge.EVENT_BUS.register(new WorldLoadListener());
         EventRegister.register(SafeMessageSender.class);
