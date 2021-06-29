@@ -102,4 +102,13 @@ public abstract class MixinNetHandlerPlayClient {
             }
         }
     }
+
+    @Inject(method = "handleTimeUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/play/server/S03PacketTimeUpdate;getTotalWorldTime()J"), cancellable = true)
+    private void onTime(final S03PacketTimeUpdate packet, final CallbackInfo ci){
+        if (TimePacketInListenerO.isActive()){
+            if (TimePacketInListenerO.eventHappens(new TimePacketInEvent(packet))){
+                ci.cancel();
+            }
+        }
+    }
 }
