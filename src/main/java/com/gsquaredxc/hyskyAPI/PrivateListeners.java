@@ -45,6 +45,6 @@ public class PrivateListeners {
         OnTickListenerO = PublicListeners.listenerHashMap.get(TickStartEvent.class);
         SoundPacketInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(SoundPacketInEvent.class);
         TimePacketInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(TimePacketInEvent.class);
-        SingleBlockInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(SoundPacketInEvent.class);
+        SingleBlockInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(SingleBlockChangeInEvent.class);
     }
 }
