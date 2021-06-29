@@ -16,7 +16,7 @@ public class ChatListener {
         final String formattedText = event.message.getFormattedText();
         /* Chat messages */
         if (event.type == 0) {
-            System.out.println(formattedText);
+            //System.out.println(formattedText);
             for (final EventChatListener listener : ActiveChatListeners.getActiveListeners()) {
                 try {
                     final Matcher matcher = listener.getPatternToMatch().matcher(formattedText);
