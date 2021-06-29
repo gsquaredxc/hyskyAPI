@@ -8,7 +8,7 @@ buildscript {
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.github.gsquaredxc:ForgeGradle:8eba49f'
+        classpath 'com.github.gsquaredxc:ForgeGradle:8708bf'
         classpath "com.github.skytils:MixinGradle:d75e32e"
     }
 }
