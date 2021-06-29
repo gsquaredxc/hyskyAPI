@@ -28,6 +28,7 @@ public class PrivateListeners {
     public static EventListener OnTickListenerO;
     public static EventPacketReceiveListener SoundPacketInListenerO;
     public static EventPacketReceiveListener TimePacketInListenerO;
+    public static EventPacketReceiveListener SingleBlockInListenerO;
 
     public static void registerPrivate(){
         ChatMessagePacketListenerO = (EventPacketSendListener) PublicListeners.listenerHashMap.get(ChatMessagePacketOutEvent.class);
@@ -44,5 +45,6 @@ public class PrivateListeners {
         OnTickListenerO = PublicListeners.listenerHashMap.get(TickStartEvent.class);
         SoundPacketInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(SoundPacketInEvent.class);
         TimePacketInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(TimePacketInEvent.class);
+        SingleBlockInListenerO = (EventPacketReceiveListener) PublicListeners.listenerHashMap.get(SoundPacketInEvent.class);
     }
 }

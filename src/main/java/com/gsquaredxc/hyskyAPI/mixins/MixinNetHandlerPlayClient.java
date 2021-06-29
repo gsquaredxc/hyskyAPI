@@ -38,7 +38,8 @@ public abstract class MixinNetHandlerPlayClient {
     }
 
     //Theres a shitty event for this on the forge side so we have to inject it.
-    //Called once per server connection I think
+    //I'm not actually sure if this implementation fixes the issue or if I just fixed it somewhere else lmao.
+    //Called once per server connection I think.
     @Inject(method = "handleJoinGame", at = @At("TAIL"))
     private void onJoinGame(final S01PacketJoinGame packet, final CallbackInfo ci){
         if (JoinGameInListenerO.isActive()) {
@@ -107,6 +108,15 @@ public abstract class MixinNetHandlerPlayClient {
     private void onTime(final S03PacketTimeUpdate packet, final CallbackInfo ci){
         if (TimePacketInListenerO.isActive()){
             if (TimePacketInListenerO.eventHappens(new TimePacketInEvent(packet))){
+                ci.cancel();
+            }
+        }
+    }
+
+    @Inject(method = "handleBlockChange", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/play/server/S23PacketBlockChange;getBlockPosition()Lnet/minecraft/util/BlockPos;"), cancellable = true)
+    private void onSingleBlock(final S23PacketBlockChange packet, final CallbackInfo ci){
+        if (SingleBlockInListenerO.isActive()){
+            if (SingleBlockInListenerO.eventHappens(new SingleBlockChangeInEvent(packet))){
                 ci.cancel();
             }
         }
