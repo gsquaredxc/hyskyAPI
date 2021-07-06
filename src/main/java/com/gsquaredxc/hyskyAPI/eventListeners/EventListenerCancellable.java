@@ -1,14 +1,14 @@
 package com.gsquaredxc.hyskyAPI.eventListeners;
 
-public class EventListenerCancellable extends EventListener{
+public class EventListenerCancellable<T extends EventCancellable> extends EventListener<T>{
 
-    public EventListenerCancellable(final Class<? extends EventCancellable> event) {
+    public EventListenerCancellable(final Class<T> event) {
         super(event);
     }
 
     public boolean eventHappens (final EventCancellable e){
-        for (final Object listener: activeListeners.values()){
-            if (((EventCallback)listener).callBackToFunctionCancellable(e)){
+        for (final EventCallback listener: activeListeners.values()){
+            if (listener.callBackToFunctionCancellable(e)){
                 return true;
             }
         }

@@ -2,10 +2,15 @@ package com.gsquaredxc.hyskyAPI.state.location;
 
 import com.gsquaredxc.hyskyAPI.annotations.EventListener;
 import com.gsquaredxc.hyskyAPI.events.chat.LocRawEvent;
+import com.gsquaredxc.hyskyAPI.events.custom.PlayerListAddEvent;
+import com.gsquaredxc.hyskyAPI.events.custom.PlayerListUpdateEvent;
 import com.gsquaredxc.hyskyAPI.events.custom.ServerTypeKnownEvent;
 import com.gsquaredxc.hyskyAPI.events.custom.SkyblockDisconnectEvent;
-import com.gsquaredxc.hyskyAPI.events.packets.*;
+import com.gsquaredxc.hyskyAPI.events.packets.PacketReceiveEvent;
 import com.gsquaredxc.hyskyAPI.utils.SafeMessageSender;
+import net.minecraft.network.play.server.S01PacketJoinGame;
+import net.minecraft.network.play.server.S3BPacketScoreboardObjective;
+import net.minecraft.network.play.server.S3EPacketTeams;
 import net.minecraft.util.StringUtils;
 
 import java.util.regex.Matcher;
@@ -32,11 +37,11 @@ public class SLocationHelpers {
     }
 
     @EventListener(id="INTERNALreceiveScoreboard")
-    public static boolean receiveScoreboard(final ScoreboardObjectiveInEvent event){
+    public static boolean receiveScoreboard(final PacketReceiveEvent<S3BPacketScoreboardObjective> event){
         if (!LocationState.getLocked() && LocationState.isDirty) {
             LocationState.lock();
             final boolean cacheState = LocationState.isInSkyblock;
-            LocationState.isInSkyblock = event.unformattedValue.contains("SKYBLOCK");
+            LocationState.isInSkyblock = StringUtils.stripControlCodes(event.originalPacket.func_149337_d()).contains("SKYBLOCK");
             if (!LocationState.isInSkyblock && cacheState){
                 SkyblockDisconnectListenerO.eventHappens(new SkyblockDisconnectEvent());
             }
@@ -47,8 +52,9 @@ public class SLocationHelpers {
     }
 
     @EventListener(id="INTERNALreceiveTeams")
-    public static boolean receiveTeams(final ScoreboardTeamInEvent event){
-        final Matcher matcher = serverNamePattern.matcher(event.unformattedValue);
+    public static boolean receiveTeams(final PacketReceiveEvent<S3EPacketTeams> event){
+        final S3EPacketTeams packet = event.originalPacket;
+        final Matcher matcher = serverNamePattern.matcher(packet.getPrefix() + packet.getSuffix());
         if (matcher.find()){
             System.out.println(StringUtils.stripControlCodes(matcher.group(1)));
         }
@@ -79,7 +85,7 @@ public class SLocationHelpers {
     }
 
     @EventListener(id="INTERNALjoinGame")
-    public static boolean joinGame(final JoinGameInEvent trash){
+    public static boolean joinGame(final PacketReceiveEvent<S01PacketJoinGame> trash){
         PlayerListAddInListenerO.reregister("INTERNALreceivePlayerAdd");
         LocationState.markDirty();
         new Thread(()-> {

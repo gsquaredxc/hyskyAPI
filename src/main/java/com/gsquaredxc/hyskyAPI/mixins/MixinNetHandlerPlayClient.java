@@ -1,5 +1,7 @@
 package com.gsquaredxc.hyskyAPI.mixins;
 
+import com.gsquaredxc.hyskyAPI.events.custom.PlayerListAddEvent;
+import com.gsquaredxc.hyskyAPI.events.custom.PlayerListUpdateEvent;
 import com.gsquaredxc.hyskyAPI.events.packets.*;
 import com.gsquaredxc.hyskyAPI.state.PlayerStates;
 import net.minecraft.client.Minecraft;
@@ -25,11 +27,11 @@ public abstract class MixinNetHandlerPlayClient {
         try {
             if (packet.getClass() == C01PacketChatMessage.class) {
                 if (ChatMessagePacketListenerO.isActive()) {
-                    ChatMessagePacketListenerO.eventHappens(new ChatMessagePacketOutEvent((C01PacketChatMessage) packet));
+                    ChatMessagePacketListenerO.eventHappens(new PacketSendEvent<>((C01PacketChatMessage)packet));
                 }
             } else if (true) {
                 if (EventPacketSendListenerO.isActive()) {
-                    EventPacketSendListenerO.eventHappens(new PacketSendEvent(packet));
+                    EventPacketSendListenerO.eventHappens(new PacketSendEvent<>(packet));
                 }
             }
         } catch (final Throwable e) {
@@ -43,7 +45,7 @@ public abstract class MixinNetHandlerPlayClient {
     @Inject(method = "handleJoinGame", at = @At("TAIL"))
     private void onJoinGame(final S01PacketJoinGame packet, final CallbackInfo ci){
         if (JoinGameInListenerO.isActive()) {
-            JoinGameInListenerO.eventHappens(new JoinGameInEvent(packet));
+            JoinGameInListenerO.eventHappens(new PacketReceiveEvent<>(packet));
         }
     }
 
@@ -58,14 +60,15 @@ public abstract class MixinNetHandlerPlayClient {
     //Called very often
     @Inject(method = "handlePlayerListItem", at = @At("TAIL"))
     private void onPlayerListPacket(final S38PacketPlayerListItem packetIn, final CallbackInfo ci){
+        //listener.eventHappens(new PacketReceiveEvent<>(packetIn));
         for (final S38PacketPlayerListItem.AddPlayerData addplayerdata : packetIn.getEntries()){
             if (packetIn.getAction() == S38PacketPlayerListItem.Action.ADD_PLAYER){
                 if (PlayerListAddInListenerO.isActive()) {
-                    PlayerListAddInListenerO.eventHappens(new PlayerListAddEvent(packetIn, addplayerdata.getProfile().getId(), addplayerdata.getProfile().getName(), addplayerdata.getDisplayName()));
+                    PlayerListAddInListenerO.eventHappens(new PlayerListAddEvent(addplayerdata.getProfile().getId(), addplayerdata.getProfile().getName(), addplayerdata.getDisplayName()));
                 }
             } else if (packetIn.getAction() == S38PacketPlayerListItem.Action.UPDATE_DISPLAY_NAME) {
                 if (PlayerListUpdateInListenerO.isActive()) {
-                    PlayerListUpdateInListenerO.eventHappens(new PlayerListUpdateEvent(packetIn, addplayerdata.getProfile().getId(), addplayerdata.getDisplayName()));
+                    PlayerListUpdateInListenerO.eventHappens(new PlayerListUpdateEvent(addplayerdata.getProfile().getId(), addplayerdata.getDisplayName()));
                 }
             }
         }
@@ -75,7 +78,7 @@ public abstract class MixinNetHandlerPlayClient {
     @Inject(method = "handleTeams", at = @At("TAIL"))
     private void onTeamPacket(final S3EPacketTeams packet, final CallbackInfo ci){
         if (ScoreboardTeamInListenerO.isActive() && packet.getPrefix() != null && packet.getSuffix() != null && packet.getName() != null) {
-            ScoreboardTeamInListenerO.eventHappens(new ScoreboardTeamInEvent(packet, packet.getPrefix() + packet.getSuffix(), packet.getName()));
+            ScoreboardTeamInListenerO.eventHappens(new PacketReceiveEvent<>(packet));
         }
     }
 
@@ -83,14 +86,14 @@ public abstract class MixinNetHandlerPlayClient {
     @Inject(method = "handleScoreboardObjective", at = @At("TAIL"))
     private void onScoreboardTitle(final S3BPacketScoreboardObjective packet, final CallbackInfo ci){
         if (ScoreboardObjectiveInListenerO.isActive() && packet.func_149337_d() != null && packet.func_149339_c() != null) {
-            ScoreboardObjectiveInListenerO.eventHappens(new ScoreboardObjectiveInEvent(packet,packet.func_149337_d(),packet.func_149339_c()));
+            ScoreboardObjectiveInListenerO.eventHappens(new PacketReceiveEvent<>(packet));
         }
     }
 
     @Inject(method = "handleTitle", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/play/server/S45PacketTitle;getType()Lnet/minecraft/network/play/server/S45PacketTitle$Type;"), cancellable = true)
     private void onScreenTitle(final S45PacketTitle packet, final CallbackInfo ci){
         if (TitleInListenerO.isActive()){
-            if (TitleInListenerO.eventHappens(new TitleInEvent(packet))){
+            if (TitleInListenerO.eventHappens(new PacketReceiveEvent<>(packet))){
                 ci.cancel();
             }
         }
@@ -98,7 +101,7 @@ public abstract class MixinNetHandlerPlayClient {
     @Inject(method = "handleSoundEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/WorldClient;playSound(DDDLjava/lang/String;FFZ)V"), cancellable = true)
     private void onSound(final S29PacketSoundEffect packet, final CallbackInfo ci){
         if (SoundPacketInListenerO.isActive()){
-            if (SoundPacketInListenerO.eventHappens(new SoundPacketInEvent(packet))){
+            if (SoundPacketInListenerO.eventHappens(new PacketReceiveEvent<>(packet))){
                 ci.cancel();
             }
         }
@@ -107,7 +110,7 @@ public abstract class MixinNetHandlerPlayClient {
     @Inject(method = "handleTimeUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/play/server/S03PacketTimeUpdate;getTotalWorldTime()J"), cancellable = true)
     private void onTime(final S03PacketTimeUpdate packet, final CallbackInfo ci){
         if (TimePacketInListenerO.isActive()){
-            if (TimePacketInListenerO.eventHappens(new TimePacketInEvent(packet))){
+            if (TimePacketInListenerO.eventHappens(new PacketReceiveEvent<>(packet))){
                 ci.cancel();
             }
         }
@@ -116,7 +119,7 @@ public abstract class MixinNetHandlerPlayClient {
     @Inject(method = "handleBlockChange", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/play/server/S23PacketBlockChange;getBlockPosition()Lnet/minecraft/util/BlockPos;"), cancellable = true)
     private void onSingleBlock(final S23PacketBlockChange packet, final CallbackInfo ci){
         if (SingleBlockInListenerO.isActive()){
-            if (SingleBlockInListenerO.eventHappens(new SingleBlockChangeInEvent(packet))){
+            if (SingleBlockInListenerO.eventHappens(new PacketReceiveEvent<>(packet))){
                 ci.cancel();
             }
         }

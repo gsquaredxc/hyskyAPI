@@ -1,8 +1,9 @@
 package com.gsquaredxc.hyskyAPI.utils;
 
 import com.gsquaredxc.hyskyAPI.annotations.EventListener;
-import com.gsquaredxc.hyskyAPI.events.packets.ChatMessagePacketOutEvent;
+import com.gsquaredxc.hyskyAPI.events.packets.PacketSendEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -28,7 +29,7 @@ public class SafeMessageSender {
 
     /*Listener callback for C01 packets*/
     @EventListener(id = "INTERNALonSendPacket")
-    public static boolean onSendPacket(final ChatMessagePacketOutEvent event) {
+    public static boolean onSendPacket(final PacketSendEvent<C01PacketChatMessage> event) {
         lastChatMessage = System.currentTimeMillis();
         return false;
     }

@@ -2,13 +2,13 @@ package com.gsquaredxc.hyskyAPI.eventListeners;
 
 import java.util.HashMap;
 
-public class EventListener implements java.util.EventListener {
+public class EventListener<T extends Event> implements java.util.EventListener {
     protected boolean active = false;
     protected HashMap<String,EventCallback> activeListeners = new HashMap<>();
     protected HashMap<String,EventCallback> inactiveListeners = new HashMap<>();
-    protected Class<? extends Event> event;
+    protected Class<T> event;
 
-    public EventListener(final Class<? extends Event> e){
+    public EventListener(final Class<T> e){
         event = e;
     }
 
