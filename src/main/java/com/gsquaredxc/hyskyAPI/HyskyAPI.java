@@ -28,6 +28,7 @@ public class HyskyAPI
     public void preinit(final FMLPreInitializationEvent event)
     {
         PublicListeners.registerEvents();
+        PublicListeners.registerPackets();
         PrivateListeners.registerPrivate();
         ClientCommandHandler.instance.registerCommand(new APILoadedCommand());
     }
